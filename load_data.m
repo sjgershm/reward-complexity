@@ -11,32 +11,13 @@ function data = load_data(dataset)
         
         case 'collins18'
             
-            T = {'ID' 'learningblock' 'trial' 'ns' 'stim' 'iter' 'corchoice' 'choice' 'cor' 'rt' 'pcor' 'delay' 'phase'};
+            T = {'ID' 'learningblock' 'trial' 'ns' 'state' 'iter' 'corchoice' 'action' 'reward' 'rt' 'pcor' 'delay' 'phase'};
             x = csvread('Collins18_data.csv',1);
             S = unique(x(:,1));
             for s = 1:length(S)
-                ix = x(:,1)==S(s);
+                ix = x(:,1)==S(s) & x(:,end)==0;
                 for j = 1:length(T)
                     data(s).(T{j}) = x(ix,j);
-                end
-                
-                trials = find(data(s).phase==0);
-                data(s).N = length(trials);
-                data(s).C = 3;
-                for t = trials'
-                    if t==1 || data(s).learningblock(t)~=data(s).learningblock(t-1)
-                        Q = zeros(data(s).ns(t),3) + 0.5;
-                        n = zeros(data(s).ns(t),3) + 0.7;
-                        Pa = ones(1,3)/3;
-                    end
-                    data(s).Q(t,:) = Q(data(s).stim(t),:);
-                    data(s).logPa(t,:) = safelog(Pa);
-                    if data(s).choice(t)>0
-                        n(data(s).stim(t),data(s).choice(t)) = n(data(s).stim(t),data(s).choice(t)) + 1;
-                        lr = 1./n(data(s).stim(t),data(s).choice(t));
-                        Q(data(s).stim(t),data(s).choice(t)) = Q(data(s).stim(t),data(s).choice(t)) + lr*(data(s).cor(t)-Q(data(s).stim(t),data(s).choice(t)));
-                        Pa = n; Pa = Pa./sum(Pa(:)); Pa = sum(Pa);
-                    end
                 end
             end
             

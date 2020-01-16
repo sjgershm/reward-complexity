@@ -7,12 +7,10 @@ function results = analyze_steyvers(data)
     end
     
     beta = linspace(1.5,5,30);
-    
-    lowerx = 1; upperx = 32; lowery = 1; uppery = 4;
-    descriptor = [lowerx,upperx,upperx-lowerx;lowery,uppery,uppery-lowery];
-    
+        
     for s = 1:length(data)
-        results.R_data(s,1) = information(data(s).state',data(s).action',descriptor);
+        results.R_data(s,1) = mutual_information(data(s).state,data(s).action);
+        if isnan(results.R_data(s)); keyboard; end
         results.V_data(s,1) = mean(data(s).reward);
         for state = 1:32
             Ps(s,state) = mean(data(s).state==state);
@@ -32,3 +30,6 @@ function results = analyze_steyvers(data)
     end
     [results.R,results.V] = blahut_arimoto(Ps,Q,beta);
     results.Q = Q; results.Ps = Ps;
+    
+    Vd = interp1(results.R,results.V,results.R_data,'cubic');   % for some reason linear interpoloation doesn't work here
+    [r,p] = corr(Vd,results.V_data)

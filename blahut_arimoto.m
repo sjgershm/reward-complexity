@@ -20,11 +20,11 @@ function [R,V,Pa] = blahut_arimoto(Ps,Q,b)
     nIter = 50;
     if nargin < 3; b = linspace(0.1,15,30); end
     R = zeros(length(b),1); V = zeros(length(b),1); Pa = zeros(length(b),A);
-    q = ones(1,A)./A;
     
     for j = 1:length(b)
         F = b(j).*Q;
         v0 = mean(Q(:));
+        q = ones(1,A)./A;
         for i = 1:nIter
             logP = log(q) + F;
             Z = logsumexp(logP,2);
