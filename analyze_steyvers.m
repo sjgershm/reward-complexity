@@ -33,3 +33,5 @@ function results = analyze_steyvers(data)
     
     Vd = interp1(results.R,results.V,results.R_data,'cubic');   % for some reason linear interpoloation doesn't work here
     [r,p] = corr(Vd,results.V_data)
+    results.bias = results.V_data - Vd;
+    [r,p] = corr(results.R_data,abs(results.bias))

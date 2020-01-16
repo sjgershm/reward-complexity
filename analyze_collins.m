@@ -62,4 +62,4 @@ function results = analyze_collins(data)
     end
     
     [r,p] = corr([results.V_data(:,1); results.V_data(:,2)],[Vd2(:,1); Vd2(:,2)])
-    [r,p] = corr([results.R_data(:,1); results.R_data(:,2)],[results.bias(:,1); results.bias(:,2)])
+    [r,p] = corr([results.R_data(:,1); results.R_data(:,2)],abs([results.bias(:,1); results.bias(:,2)]))
