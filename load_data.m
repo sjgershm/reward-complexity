@@ -48,4 +48,31 @@ function data = load_data(dataset)
                 data(s).logPa = log(A./sum(A,2));
             end
             
+        case 'collins14'
+            
+            load Collins_JN2014.mat
+            
+            T = {'ID' 'learningblock' 'ns' 'trial' 'state' 'image' 'folder' 'iter' 'corchoice' 'action' 'key' 'cor' 'reward' 'rt' 'cond' 'pcor' 'delay'};
+            S = unique(expe_data(:,1));
+            for s = 1:length(S)
+                ix = expe_data(:,1)==S(s);
+                for j = 1:length(T)
+                    data(s).(T{j}) = expe_data(ix,j);
+                end
+                data(s).ID = data(s).ID(1);
+                data(s).cond = data(s).cond(1);
+            end
+            
+        case 'rutledge09'
+            
+            %pop: 1 hc2000 young controls, 2 hc2600 elderly controls, 3 pdoff, 4 pdon
+            %hdr: 1 trialnum within block, 2 pressed 1left 2right button, 3 reward
+            %received, 4cumulative reward, 5 reward scheduled on left, 6 reward
+            %scheduled on right, 7 probleft, 8 probright, 9 choice time, 10 trial onset
+            %(RTs can be <100ms because people can anticipate)
+            
+            load rutledge_jns09_rawdata.mat
+            
+            
+            
     end

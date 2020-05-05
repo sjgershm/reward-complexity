@@ -47,6 +47,7 @@ function plot_figures(fig,results)
             set(gca,'FontSize',25,'XLim',[-0.2 2]);
             xlabel('Perseveration parameter','FontSize',25);
             ylabel('Frequency','FontSize',25);
+            mytitle('A','Left','FontSize',25,'FontWeight','Bold')
             
             subplot(2,2,2)
             L = log(bms_results.g(:,2)) - log(bms_results.g(:,1));
@@ -54,6 +55,7 @@ function plot_figures(fig,results)
             set(gca,'FontSize',25,'YLim',[-5 10],'XLim',[1 91]);
             xlabel('Subject','FontSize',25);
             ylabel('Model evidence','FontSize',25);
+            mytitle('C','Left','FontSize',25,'FontWeight','Bold')
             
             load results_steyvers_modelfit.mat
             
@@ -63,6 +65,7 @@ function plot_figures(fig,results)
             set(gca,'FontSize',25,'XLim',[-0.2 2]);
             xlabel('Perseveration parameter','FontSize',25);
             ylabel('Frequency','FontSize',25);
+            mytitle('B','Left','FontSize',25,'FontWeight','Bold')
             
             subplot(2,2,4)
             L = log(bms_results.g(:,2)) - log(bms_results.g(:,1));
@@ -70,6 +73,7 @@ function plot_figures(fig,results)
             set(gca,'FontSize',25,'YLim',[-5 10],'XLim',[1 1000]);
             xlabel('Subject','FontSize',25);
             ylabel('Model evidence','FontSize',25);
+            mytitle('D','Left','FontSize',25,'FontWeight','Bold')
             
             set(gcf,'Position',[200 200 950 800])
             

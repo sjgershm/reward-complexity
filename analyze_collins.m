@@ -18,7 +18,7 @@ function results = analyze_collins(data)
             state = data(s).state(ix);
             c = data(s).corchoice(ix);
             action = data(s).action(ix);
-            R_data(b) = mutual_information(state,action,0.7);
+            R_data(b) = mutual_information(state,action,0.1);
             V_data(b) = mean(data(s).reward(ix));
             
             S = unique(state);
@@ -58,8 +58,8 @@ function results = analyze_collins(data)
     V = squeeze(nanmean(results.V));
     for c = 1:2
         Vd2(:,c) =  interp1(R(:,c),V(:,c),results.R_data(:,c));
-        results.bias(:,c) = results.V_data(:,c) - Vd2(:,c);
+        results.bias(:,c) = Vd2(:,c) - results.V_data(:,c);
     end
     
     [r,p] = corr([results.V_data(:,1); results.V_data(:,2)],[Vd2(:,1); Vd2(:,2)])
-    [r,p] = corr([results.R_data(:,1); results.R_data(:,2)],abs([results.bias(:,1); results.bias(:,2)]))
+    [r,p] = corr([results.R_data(:,1); results.R_data(:,2)],[results.bias(:,1); results.bias(:,2)])
