@@ -19,5 +19,5 @@ function I = mutual_information(state,action,alpha)
     n = sum(N(:));
     nA = sum(N);
     nS = sum(N,2);
-    P = psi(N+1) - psi(nA+1) - psi(nS+1) + psi(n+1);
+    P = psi(N+1) - repmat(psi(nA+1), size(N,1), 1) - repmat(psi(nS+1), 1, size(N,2)) + psi(n+1);
     I = sum(sum(N.*P))/n;
